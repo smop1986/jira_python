@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+       <title>Reusable Form Demo</title>
+       <link rel="stylesheet" media="screen" href ="static/css/bootstrap.min.css">
+       <link rel="stylesheet" href="static/css/bootstrap-theme.min.css">
+       
+       <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+ <style>
+ hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+    }
+    
+ .col-25{
+ float:left;
+ width:15%;
+ margin-top:6px;
+ }
+ .col-75{
+ float:left;
+ width:45%;
+ margin-top:6px;
+ }
+ .row:after{
+ content: "";
+ display:table;
+ clear:both;}
+ 
+ .option {
+  display: none;
+  margin: 2rem 1rem;
+}
+ </style>
+    </head>
+    <body>
+ 
+ 
+<div class="container">
+ 
+ 
+  <h2>Flask Web Form</h2>
+  
+
+    
+    <div>
+    <div class="row">
+    <div class="col-25">
+      <label for="projectName"  style="justify-content:flex-end;" required>Project Name*:</label></div>
+      <div class="col-75"> <select id="projectName">
+        <option>ISG DBA DevOps(IDD)</option>
+        <option>JIRA Services(JS)</option>
+       </select></div>
+       </div>
+   
+    <br>
+     
+      <div class="row">
+      <div class="col-25">
+        <label for="issueType" style="justify-content:flex-end;" required>Issue Type*:</label></div>
+       <div class="col-75"> <select id="issuetype" onchange="epicfnc()">
+            <option>Epic</option>
+            <option>Theme</option>
+            <option>Bug</option>
+            <option>Story</option>
+        </select></div>
+   </div>
+      <br>
+      <hr>       
+      
+    <br>
+    <div class="row">
+        <label for="summary" class="col-md-2" style="justify-content:flex-end;" required>Summary:</label>
+        <input type="text" class="form-control" id="summary" placeholder="">
+    </div><br>
+      
+     <div class="row">
+        <label for="component" class="col-md-2" style="justify-content:flex-end;" required>Component/s:</label>
+        <select class="form-control col-md-7" id="component">
+            <option>Product Backlog</option>
+        </select>
+        </div><br>
+    
+      
+      <div class="row">
+        <label for="priority" class="col-md-2" style="justify-content:flex-end;" required>Priority:</label>
+        <select class="form-control col-md-7" id="priority">
+            <option>Major</option>
+            <option>Blocker</option>
+            <option>Critical</option>
+            <option>Minor</option>
+            <option>Trivial</option>
+        </select>
+        </div><br>
+   
+      <div class="row">
+        <label for="description" class="col-md-2" style="justify-content:flex-end;">Description:</label>
+        <textarea class="form-control rounded-0" id="description" placeholder="" rows="3"></textarea>
+      </div><br>
+    
+      </div>
+ 
+ 
+   
+    <button type="submit" class="btn btn-success">Submit</button>
+
+ 
+  <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+ 
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+ 
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+ 
+</div>
+<br>            
+</div>
+</div>
+<script>
+var $list = $( '#list' );
+var $options = $( '.option' );
+
+$list.on( 'change', function ( e ) {
+  
+  $options.hide();
+  $( '#option-' + this.value ).show();
+  
+} );</script>
+<script>
+function epicfnc(){
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+</body>
+</html>
