@@ -1,53 +1,64 @@
 # this file contains the jira form
 
-from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, SelectField
+from wtforms import Form, TextAreaField, validators, StringField, SubmitField, SelectField
 
 
 class JiraForm(Form):
     # user info
-    name = TextField('Name:', validators=[validators.required()])
-    email = TextField('Email:', validators=[
-                      validators.required(), validators.Length(min=6, max=35)])
+    name = StringField(
+        "Name:",
+        validators=[validators.required("Please enter your name.")])
 
-    # issue info
+    email = StringField(
+        "Email:",
+        validators=[
+            validators.Email("Please enter a valid email address."),
+            validators.required("Please enter your email address.")])
 
     # summary of the issue
-    summary = TextField(
+    summary = StringField(
         "Summary:",
         validators=[
-            validators.required(),
-            validators.Length(min=10, max=50)
-        ]
-    )
+            validators.required("Please enter issue summary"),
+            validators.Length(min=10, max=50)])
 
     # component of the issue (drop down)
-    component_choices = ["Product Backlog"]
+    component_choices = [("product_backlog", "Product Backlog")]
     component = SelectField(
         "Component:",
         choices=component_choices,
         validators=[
-            validators.required()
-        ]
-    )
+            validators.required("Please select one component.")])
 
     # description of the issue
     description = TextAreaField(
         "Description:",
         validators=[
-            validators.required(),
-            validators.Length(min=10, max=500)
-        ]
-    )
+            validators.required("Please enter description of the issue."),
+            validators.Length(min=10, max=500)])
 
     # Priority of the issue
-    priority_choices = ["Blocker", "Critical", "Major", "Minor", "Trival"]
+    priority_choices = [("blocker", "Blocker"),
+                        ("critical", "Critical"),
+                        ("major", "Major"),
+                        ("minor", "Minor"),
+                        ("trival", "Trivial")]
 
-    prirority = SelectField(
-        "Priority",
+    priority = SelectField(
+        "Priority:",
         choices=priority_choices,
         validators=[
-            validators.required()
-        ]
-    )
-    #project = TextField('Project:', validators=[validators.required(), validators.Length(min=5, max=100)])
-    #issuetype = TextField('Issuetype:', validators=[validators.required(), validators.Length(min=5, max=100)])
+            validators.required("Please select priority of the issue.")])
+
+    # severity of the issue
+    # since the choices are same
+    severity_choices = priority_choices 
+
+    severity = SelectField(
+        "Severity:",
+        choices=severity_choices,
+        validators=[
+            validators.required("Please select severity of the issue.")])
+
+    #project = StringField('Project:', validators=[validators.required(), validators.Length(min=5, max=100)])
+    #issuetype = StringField('Issuetype:', validators=[validators.required(), validators.Length(min=5, max=100)])
