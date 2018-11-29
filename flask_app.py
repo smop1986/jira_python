@@ -11,6 +11,8 @@ from jira_form import JiraForm
 # App configurations
 DEBUG = True
 app = Flask(__name__)
+app.config.from_object(__name__)
+app.config["SECRET_KEY"] = "SjdnUends821Jsdlkvxh391ksdODnejdDw"
 
 # set the HTML template name
 HTML_TEMPLATE = "jira_form.html"
@@ -33,16 +35,18 @@ def root_handler():
         email = request.form["email"]
         summary = request.form["summary"]
         component = request.form["component"]
+        priority = request.form["priority"]
         description = request.form["description"]
-        project = request.form["project"]
-        issuetype = request.form["issuetype"]
+        severity = request.form["severity"]
 
         if not form.validate():
             flash("All fields are required")
 
-        jira_obj = JiraClient(JIRA_SERVER)
-        jira_obj.login(JIRA_USER, JIRA_PASSWORD)
-        flash("Logged at Jira!")
+        #jira_obj = JiraClient(JIRA_SERVER)
+        #jira_obj.login(JIRA_USER, JIRA_PASSWORD)
+        #flash("Logged at Jira!")
+        print name, email, summary, component, priority, description, severity
+        sys.stdout.flush()
 
     return render_template(HTML_TEMPLATE, form=form)
 
