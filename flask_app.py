@@ -38,7 +38,7 @@ def root_handler():
         component = request.form["component"]
         priority = request.form["priority"]
         description = request.form["description"]
-        severity = request.form["severity"]
+        #severity = request.form["severity"]
 
         if not form.validate():
             flash("Error")
@@ -47,7 +47,7 @@ def root_handler():
         jira_obj = JiraClient(JIRA_SERVER)
         logged_in = jira_obj.login(JIRA_USER, JIRA_PASSWORD)
         print ("Logged in at Jira server {}".format(JIRA_SERVER))
-        print name, email, summary, component, priority, description, severity
+        print name, email, summary, component, priority, description
         if logged_in:
             print ("Creating issue at Jira..")
             issue_id = jira_obj.create_issue(
@@ -56,9 +56,9 @@ def root_handler():
                 priority=priority,
                 description=description + "\n\nFrom: {}\t{}".format(
                     name, email),
-                issuetype={"name": "Bug"},
-                severity=severity,
-                Found="In Sprint",
+                issuetype={"name": "Story"},
+                #severity=severity,
+                #Found="In Sprint",
             )
             print ("Created issue {} at Jira".format(issue_id))
             flash("Logged the issue at Jira!")
