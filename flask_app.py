@@ -19,8 +19,9 @@ HTML_TEMPLATE = "jira_form.html"
 
 # get the environment variables
 JIRA_SERVER = os.environ.get("JIRA_SERVER")
-JIRA_USER = os.environ.get("USERNAME")
-JIRA_PASSWORD = os.environ.get("PASSWORD")
+JIRA_USER = os.environ.get("JIRA_USER")
+JIRA_PASSWORD = os.environ.get("JIRA_PASSWORD")
+JIRA_PROJECT = os.environ.get("JIRA_PROJECT")
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -40,12 +41,25 @@ def root_handler():
         severity = request.form["severity"]
 
         if not form.validate():
-            flash("All fields are required")
+            flash("Error")
+            return render_template(HTML_TEMPLATE, form=form)
 
-        #jira_obj = JiraClient(JIRA_SERVER)
-        #jira_obj.login(JIRA_USER, JIRA_PASSWORD)
-        #flash("Logged at Jira!")
+        jira_obj = JiraClient(JIRA_SERVER)
+        logged_in = jira_obj.login(JIRA_USER, JIRA_PASSWORD)
+        print ("Logged in at Jira server {}".format(JIRA_SERVER))
         print name, email, summary, component, priority, description, severity
+        if logged_in:
+            print ("Creating issue at Jira..")
+            issue_id = jira_obj.create_issue(
+                project=JIRA_PROJECT,
+                summary=summary,
+                description=description + "\n\nFrom: {}\t{}".format(
+                    name, email),
+                issuetype={"name": "Task"}
+            )
+            print ("Created issue {} at Jira".format(issue_id))
+            flash("Logged the issue at Jira!")
+
         sys.stdout.flush()
 
     return render_template(HTML_TEMPLATE, form=form)
