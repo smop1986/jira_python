@@ -53,7 +53,7 @@ def root_handler():
             issue_id = jira_obj.create_issue(
                 project=JIRA_PROJECT,
                 summary=summary,
-                priority=priority,
+                #priority=priority,
                 description=description + "\n\nFrom: {}\t{}".format(
                     name, email),
                 issuetype={"name": "Story"},
