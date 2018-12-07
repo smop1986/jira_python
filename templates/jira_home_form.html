@@ -17,13 +17,12 @@
   <h4>Select the issue type you want to create</h4>
   <form action="" method="post" role="form" class="form-horizontal">
     {{ form.csrf }}
-    <div class="radio">
-      {{ form.issue_type.label}}
-      {{ form.issue_type}}
-    </div> <!--form-group-->
-    <div class="control-label  col-sm-2"></div>
-    <div class="col-sm-10">
-        <button type="submit" class="btn btn-success">Submit</button>
+
+    {{ form.issue_type(class_=("radio-inline")) }}
+    <br>
+    <br>
+    <button type="submit" class="btn btn-success">Submit</button>
+
     </div>
   </form> <!--form-->
 
